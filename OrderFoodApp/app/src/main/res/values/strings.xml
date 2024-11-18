@@ -19,7 +19,11 @@
     <string name="bill">Hóa Đơn Bàn Ăn</string>
 
 
-
-
+    <string name="tenKhachHang">Tên người dùng</string>
+    <string name="email">user@example.com</string>
+    <string name="btnEditProfile">Chỉnh sửa thông tin</string>
+    <string name="btnChangePassword">Đổi mật khẩu</string>
+    <string name="btnHistory">Lịch sử đặt hàng</string>
+    <string name="btnLogout">Đăng xuất</string>
 
 </resources>

@@ -268,7 +268,7 @@
                         <ImageView
                             android:id="@+id/imageViewSupport"
                             android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_height="match_parent"
                             android:src="@drawable/btn3" />
 
                         <TextView

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.orderfoodapp.Database.CreateDatabase;
 import com.example.orderfoodapp.Model.MonAn;
 
 import java.util.ArrayList;
@@ -48,6 +47,32 @@ public class MonAnDAO {
                 String tenMonAn = cursor.getString(cursor.getColumnIndexOrThrow("TENMONAN"));
                 String giaTien = cursor.getString(cursor.getColumnIndexOrThrow("GIATIEN"));
                 int maLoai = cursor.getInt(cursor.getColumnIndexOrThrow("MALOAI"));
+                String hinhAnh = cursor.getString(cursor.getColumnIndexOrThrow("HINHANH"));
+
+                MonAn monAn = new MonAn(maMonAn, tenMonAn, giaTien, maLoai, hinhAnh);
+                monAnList.add(monAn);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return monAnList;
+    }
+
+    // Phương thức lấy món ăn theo mã loại
+    public List<MonAn> getMonAnByLoai(int maLoai) {
+        List<MonAn> monAnList = new ArrayList<>();
+        SQLiteDatabase db = createDatabase.open();
+
+        String query = "SELECT * FROM MONAN WHERE MALOAI = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(maLoai)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int maMonAn = cursor.getInt(cursor.getColumnIndexOrThrow("MAMONAN"));
+                String tenMonAn = cursor.getString(cursor.getColumnIndexOrThrow("TENMONAN"));
+                String giaTien = cursor.getString(cursor.getColumnIndexOrThrow("GIATIEN"));
                 String hinhAnh = cursor.getString(cursor.getColumnIndexOrThrow("HINHANH"));
 
                 MonAn monAn = new MonAn(maMonAn, tenMonAn, giaTien, maLoai, hinhAnh);

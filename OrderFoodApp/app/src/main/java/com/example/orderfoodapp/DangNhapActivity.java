@@ -36,8 +36,13 @@ public class DangNhapActivity extends AppCompatActivity {
         edtTaiKhoan = findViewById(R.id.edtTaiKhoan);
         editMatKhauDN = findViewById(R.id.edtMatKhauDN);
 
-        // Ẩn nút Đăng Ký nếu không cần thiết
-        btnDangKyDN.setVisibility(View.GONE);
+        btnDangKyDN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DangNhapActivity.this, DangKyActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Sự kiện khi người dùng nhấn nút Đăng nhập
         btnDongYDN.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +67,9 @@ public class DangNhapActivity extends AppCompatActivity {
                         String chucVu = role.getChucVu();
                         Toast.makeText(DangNhapActivity.this, "Chào mừng " + chucVu + "!", Toast.LENGTH_SHORT).show();
 
+                        Intent intent = new Intent(DangNhapActivity.this, TrangChuActivity.class);
+                        intent.putExtra("tendangnhap", tenDangNhap);
+
                         // Chuyển hướng dựa trên vai trò người dùng
                         switch (maRole) {
                             case 1:
@@ -74,7 +82,7 @@ public class DangNhapActivity extends AppCompatActivity {
                                 break;
                             case 3:
                                 // Vai trò Khách hàng
-                                startActivity(new Intent(DangNhapActivity.this, TrangChuActivity.class));
+                                startActivity(intent);
                                 break;
                             default:
                                 // Vai trò không xác định

@@ -2,16 +2,14 @@ package com.example.orderfoodapp.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.bumptech.glide.util.Util;
-import com.example.orderfoodapp.Model.User;
+
 import com.example.orderfoodapp.Utils.PasswordUtils;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
 
 
 public class CreateDatabase extends SQLiteOpenHelper {
@@ -64,6 +62,7 @@ public class CreateDatabase extends SQLiteOpenHelper {
     public static String TB_GOIMON_THUAVAT = "THUEVAT";
     public static String TB_GOIMON_MAPHUONGTHUCTHANHTOAN = "MAPHUONGTHUCTHANHTOAN";
 
+    public static String TB_CHITIETGOIMON_MACTGM = "MACTGM";
     public static String TB_CHITIETGOIMON_MAGOIMON = "MAGOIMON";
     public static String TB_CHITIETGOIMON_MAMONAN = "MAMONAN";
     public static String TB_CHITIETGOIMON_SOLUONG = "SOLUONG";
@@ -78,15 +77,18 @@ public class CreateDatabase extends SQLiteOpenHelper {
     public static String TB_NGUYENLIEU_KHOILUONG = "KHOILUONG";
     public static String TB_NGUYENLIEU_MOTTA = "MOTA";
 
+    public static String TB_NGUYENLIEUMONAN_MANLMA = "MANLMA";
     public static String TB_NGUYENLEUMONAN_MAMONAN = "MAMONAN";
     public static String TB_NGUYENLIEUMONAN_MANGUYENLIEU = "MANGUYENLIEU";
 
     public static String TB_PHUONGTHUCTHANHTOAN_MAPTTH = "MAPTTH";
     public static String TB_PHUONGTHUCTHANHTOAN_NAME = "NAME";
 
+    private static final String DATABASE_NAME = "OrderFoodApp.db";
 
     public CreateDatabase(Context context) {
-        super(context, "OrderFoodApp", null, 5);
+
+        super(context, DATABASE_NAME, null, 9);
     }
 
     @Override
@@ -115,7 +117,8 @@ public class CreateDatabase extends SQLiteOpenHelper {
                 + TB_MONAN_MALOAI + " INTEGER, "
                 + TB_MONAN_GIATIEN + " TEXT NOT NULL,"
                 + TB_MONAN_HINHANH + " TEXT, "
-                + TB_MONAN_MANGUYENLIEU + " INTEGER)";
+                + TB_MONAN_MANGUYENLIEU + " INTEGER, "
+                + "FOREIGN KEY(" + TB_MONAN_MALOAI + ") REFERENCES " + TB_LOAIMONAN + "(" + TB_LOAIMONAN_MALOAI + "))";
 
         String tbLOAIMONAN = "CREATE TABLE " + TB_LOAIMONAN + " ( "
                 + TB_LOAIMONAN_MALOAI + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -131,14 +134,19 @@ public class CreateDatabase extends SQLiteOpenHelper {
                 + TB_GOIMON_TONGSOMON + " TEXT ,"
                 + TB_GOIMON_TONGTIEN + " TEXT, "
                 + TB_GOIMON_THUAVAT + " TEXT, "
-                + TB_GOIMON_MAPHUONGTHUCTHANHTOAN + " INTEGER )";
+                + TB_GOIMON_MAPHUONGTHUCTHANHTOAN + " INTEGER, "
+                + "FOREIGN KEY(" + TB_GOIMON_MABAN + ") REFERENCES " + TB_BANAN + "(" + TB_BANAN_MABAN + "), "
+                + "FOREIGN KEY(" + TB_GOIMON_MAPHUONGTHUCTHANHTOAN + ") REFERENCES " + TB_PHUONGTHUCTHANHTOAN + "(" + TB_PHUONGTHUCTHANHTOAN_MAPTTH + "), "
+                + "FOREIGN KEY(" + TB_GOIMON_MAUSER + ") REFERENCES " + TB_USER + "(" + TB_USER_MAUSER + "))";
 
         String tbCHITETGOIMON = "CREATE TABLE " + TB_CHITIETGOIMON + " ( "
+                + TB_CHITIETGOIMON_MACTGM + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TB_CHITIETGOIMON_MAGOIMON + " INTEGER, "
                 + TB_CHITIETGOIMON_MAMONAN + " INTEGER, "
                 + TB_CHITIETGOIMON_SOLUONG + " INTEGER, "
-                + TB_CHITIETGOIMON_TRANGTHAI + " TEXT,"
-                + "PRIMARY KEY ( " + TB_CHITIETGOIMON_MAMONAN + "," + TB_CHITIETGOIMON_MAGOIMON + "))";
+                + TB_CHITIETGOIMON_TRANGTHAI + " TEXT, "
+                + "FOREIGN KEY(" + TB_CHITIETGOIMON_MAGOIMON + ") REFERENCES " + TB_GOIMON + "(" + TB_GOIMON_MAGOIMON + "), "
+                + "FOREIGN KEY(" + TB_CHITIETGOIMON_MAMONAN + ") REFERENCES " + TB_MONAN + "(" + TB_MONAN_MAMONAN + "))";
 
         String tbROLE = "CREATE TABLE " + TB_ROLE + " ( "
                 + TB_ROLE_MAROLE + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -149,15 +157,17 @@ public class CreateDatabase extends SQLiteOpenHelper {
                 + TB_NGUYENLIEU_MANGUYENLIEU + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TB_NGUYENLIEU_TENNGUYENLIEU + " TEXT ,"
                 + TB_NGUYENLIEU_KHOILUONG + " TEXT, "
-                + TB_NGUYENLIEU_MOTTA + " TETX )";
+                + TB_NGUYENLIEU_MOTTA + " TEXT )";
 
         String tbNGUYENLIEUMONAN = "CREATE TABLE " + TB_NGUYENLIEUMONAN + " ( "
+                + TB_NGUYENLIEUMONAN_MANLMA + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TB_NGUYENLIEUMONAN_MANGUYENLIEU + " INTEGER, "
                 + TB_NGUYENLEUMONAN_MAMONAN + " INTEGER, "
-                + "PRIMARY KEY (" + TB_NGUYENLIEUMONAN_MANGUYENLIEU + ", " + TB_NGUYENLEUMONAN_MAMONAN + "))";
+                + "FOREIGN KEY(" + TB_NGUYENLIEUMONAN_MANGUYENLIEU + ") REFERENCES " + TB_NGUYENLIEU + "(" + TB_NGUYENLIEU_MANGUYENLIEU + "), "
+                + "FOREIGN KEY(" + TB_NGUYENLEUMONAN_MAMONAN + ") REFERENCES " + TB_MONAN + "(" + TB_MONAN_MAMONAN + "))";
 
         String tbPHUONGTHUCTHANHTOAN = "CREATE TABLE " + TB_PHUONGTHUCTHANHTOAN + " ( "
-                + TB_PHUONGTHUCTHANHTOAN_MAPTTH + " TEXT, "
+                + TB_PHUONGTHUCTHANHTOAN_MAPTTH + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TB_PHUONGTHUCTHANHTOAN_NAME + " TEXT )";
 
         db.execSQL(tbUSER);
@@ -183,20 +193,78 @@ public class CreateDatabase extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO PHUONGTHUCTHANHTOAN (NAME) VALUES ('Chuyển khoản ngân hàng')");
         db.execSQL("INSERT INTO PHUONGTHUCTHANHTOAN (NAME) VALUES ('Momo')");
 
+        //Thêm dữ liệu vào bảng món ăn
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Gỏi cuốn', 1, '50000', 'goi_cuon.jpg', 1)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bún chay', 1, '40000', 'bun_chay.jpg', 2)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Gà nướng', 2, '120000', 'ga_nuong.jpg', 3)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Sườn nướng', 2, '150000', 'suon_nuong.jpg', 4)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Cá hấp', 3, '130000', 'ca_hap.jpg', 5)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Mực hấp', 3, '140000', 'muc_hap.jpg', 6)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bò xào', 4, '160000', 'bo_xao.jpg', 7)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Gà xào', 4, '110000', 'ga_xao.jpg', 8)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Lẩu thập cẩm', 5, '200000', 'lau_thap_cam.jpg', 9)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Lẩu gà', 5, '180000', 'lau_ga.jpg', 10)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Cá nướng', 6, '150000', 'ca_nuong.jpg', 11)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Tôm nướng', 6, '160000', 'tom_nuong.jpg', 12)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bò hầm', 7, '170000', 'bo_ham.jpg', 13)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Heo hầm', 7, '160000', 'heo_ham.jpg', 14)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bánh xèo', 8, '60000', 'banh_xeo.jpg', 15)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Phở bò', 9, '75000', 'pho_bo.jpg', 16)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Phở gà', 9, '70000', 'pho_ga.jpg', 17)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bánh cuốn', 8, '50000', 'banh_cuon.jpg', 18)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Mì xào hải sản', 4, '85000', 'mi_xao_hai_san.jpg', 19)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Cơm tấm', 2, '55000', 'com_tam.jpg', 20)");
+
         // Thêm dữ liệu mặc định cho bảng LOAIMONAN
-        db.execSQL("INSERT INTO LOAIMONAN (TENLOAI, MOTA) VALUES ('Món chính', 'Các món ăn chính')");
-        db.execSQL("INSERT INTO LOAIMONAN (TENLOAI, MOTA) VALUES ('Đồ uống', 'Các loại đồ uống')");
-        db.execSQL("INSERT INTO LOAIMONAN (TENLOAI, MOTA) VALUES ('Tráng miệng', 'Các món tráng miệng')");
+        db.execSQL("INSERT INTO LOAIMONAN (TENLOAI, MOTA) VALUES ('Món ăn chay', 'Các món ăn không chứa thịt hoặc sản phẩm từ động vật')");
+        db.execSQL("INSERT INTO LOAIMONAN (TENLOAI, MOTA) VALUES ('Món nướng', 'Các món ăn được chế biến bằng phương pháp nướng')");
+        db.execSQL("INSERT INTO LOAIMONAN (TENLOAI, MOTA) VALUES ('Món hấp', 'Các món ăn được chế biến bằng phương pháp hấp, giữ nguyên hương vị tươi ngon')");
+        db.execSQL("INSERT INTO LOAIMONAN (TENLOAI, MOTA) VALUES ('Món xào', 'Các món ăn chế biến bằng cách xào nhanh trên chảo')");
+        db.execSQL("INSERT INTO LOAIMONAN (TENLOAI, MOTA) VALUES ('Món lẩu', 'Các món ăn nấu trong nồi lẩu, thường được ăn kèm với các loại rau và gia vị')");
+        db.execSQL("INSERT INTO LOAIMONAN (TENLOAI, MOTA) VALUES ('Món hải sản', 'Các món ăn được chế biến từ hải sản như cá, tôm, mực, v.v.')");
+        db.execSQL("INSERT INTO LOAIMONAN (TENLOAI, MOTA) VALUES ('Món thịt', 'Các món ăn được chế biến từ thịt động vật như bò, heo, gà, v.v.')");
 
         // Thêm dữ liệu mặc định cho bảng BANAN
         db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 1', 'Trống')");
         db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 2', 'Trống')");
         db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 3', 'Đang sử dụng')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 4', 'Trống')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 5', 'Đang sử dụng')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 6', 'Đang sử dụng')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 7', 'Trống')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 8', 'Đang sử dụng')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 9', 'Trống')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 10', 'Đang sử dụng')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 11', 'Trống')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 12', 'Trống')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 13', 'Đang sử dụng')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 14', 'Trống')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 15', 'Đang sử dụng')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 16', 'Trống')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 17', 'Trống')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 18', 'Đang sử dụng')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 19', 'Trống')");
+        db.execSQL("INSERT INTO BANAN (TENBAN, TINHTRANG) VALUES ('Bàn 20', 'Đang sử dụng')");
 
         // Thêm dữ liệu mặc định cho bảng NGUYENLIEU
         db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Thịt bò', '100 kg', 'Thịt bò tươi')");
         db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Rau xà lách', '50 kg', 'Rau sạch')");
         db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Gạo', '200 kg', 'Gạo thơm')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Tôm tươi', '30 kg', 'Tôm sạch, tươi ngon')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Cà chua', '60 kg', 'Cà chua chín mọng')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Cà rốt', '40 kg', 'Cà rốt tươi, ngọt')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Hành tây', '30 kg', 'Hành tây tươi')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Ớt đỏ', '15 kg', 'Ớt tươi, cay nồng')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Khoai tây', '80 kg', 'Khoai tây ngon, chắc')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Bột mì', '100 kg', 'Bột mì chất lượng cao')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Trứng gà', '150 kg', 'Trứng gà tươi, sạch')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Sữa tươi', '200 lít', 'Sữa tươi nguyên chất')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Bơ', '50 kg', 'Bơ sữa ngon, mềm')");db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Tỏi', '20 kg', 'Tỏi tươi, thơm')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Nấm hương', '10 kg', 'Nấm hương tươi, thơm ngon')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Sả', '15 kg', 'Sả tươi, thơm')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Lá chanh', '5 kg', 'Lá chanh tươi, thơm')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Nước mắm', '100 lít', 'Nước mắm nguyên chất')");
+        db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Đường', '150 kg', 'Đường trắng, tinh khiết')");
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){

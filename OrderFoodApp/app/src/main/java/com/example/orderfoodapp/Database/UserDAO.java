@@ -18,6 +18,8 @@ public class UserDAO {
         this.database = new CreateDatabase(context);
     }
 
+
+
     // Insert User vào database
     public long insertUSER(User user) {
         SQLiteDatabase db = database.open();
@@ -87,5 +89,27 @@ public class UserDAO {
             if (db != null && db.isOpen()) db.close();  // Đảm bảo đóng database
         }
         return user;  // Trả về đối tượng User nếu tìm thấy, nếu không trả về null
+    }
+
+    public String getTenDangNhapById(int userId) {
+        SQLiteDatabase db = database.open();
+        Cursor cursor = null;
+        String tenDangNhap = null;
+
+        try {
+            cursor = db.rawQuery("SELECT " + CreateDatabase.TB_USER_TENDN + " FROM " + CreateDatabase.TB_USER +
+                    " WHERE " + CreateDatabase.TB_USER_MAUSER + " =?", new String[]{String.valueOf(userId)});
+
+            if (cursor != null && cursor.moveToFirst()) {
+                tenDangNhap = cursor.getString(cursor.getColumnIndex(CreateDatabase.TB_USER_TENDN));
+            }
+        } catch (Exception e) {
+            Log.e("UserDAO", "Error retrieving username", e);
+        } finally {
+            if (cursor != null) cursor.close();
+            if (db != null && db.isOpen()) db.close();
+        }
+
+        return tenDangNhap;
     }
 }

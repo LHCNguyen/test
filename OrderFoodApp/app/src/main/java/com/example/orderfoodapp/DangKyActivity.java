@@ -1,5 +1,7 @@
 package com.example.orderfoodapp;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.orderfoodapp.Database.CreateDatabase;
 import com.example.orderfoodapp.Database.UserDAO;
 import com.example.orderfoodapp.Model.User;
 
@@ -23,7 +26,7 @@ import java.util.Date;
 public class DangKyActivity extends AppCompatActivity {
 
     private EditText edtTenDN, edtMatKhau, edtNgaySinh, edtEmail, edtXacNhanMatKhau;
-    private Button btnDongY, btnThoat;
+    private Button btnDongY, btnThoat, btnDangNhap;
     private RadioButton radGioiTinhNam, radGioiTinhNu;
     private RadioGroup radGroupGioiTinh;
     private UserDAO userDAO;
@@ -32,6 +35,9 @@ public class DangKyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_dangky);
+
+        CreateDatabase database = new CreateDatabase(this);
+        SQLiteDatabase db = database.getWritableDatabase();
 
         // Khởi tạo UserDAO
         userDAO = new UserDAO(this);
@@ -47,6 +53,7 @@ public class DangKyActivity extends AppCompatActivity {
         radGioiTinhNu = findViewById(R.id.radGioiTinhNu);
         btnDongY = findViewById(R.id.btnDongY);
         btnThoat = findViewById(R.id.btnThoat);
+        btnDangNhap = findViewById(R.id.btnDangNhap);
 
         // Thêm kí tự "/" vào ngày sinh để giúp người dùng không phải nhập dấu "/"
         edtNgaySinh.addTextChangedListener(new TextWatcher() {
@@ -141,6 +148,9 @@ public class DangKyActivity extends AppCompatActivity {
                         long result = userDAO.insertUSER(user);
                         if (result != -1) {
                             Toast.makeText(DangKyActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(DangKyActivity.this, DangNhapActivity.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(DangKyActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
                         }
@@ -154,6 +164,14 @@ public class DangKyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        btnDangNhap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DangKyActivity.this, DangNhapActivity.class);
+                startActivity(intent);
             }
         });
     }

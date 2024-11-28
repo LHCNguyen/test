@@ -3,7 +3,10 @@ package com.example.orderfoodapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,16 +21,19 @@ import com.example.orderfoodapp.Domain.CategoryDomain;
 import com.example.orderfoodapp.Domain.FoodDomain;
 import com.example.orderfoodapp.Model.Category;
 import com.example.orderfoodapp.Model.MonAn;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrangChuActivity extends AppCompatActivity {
+public class TrangChuActivity extends AppCompatActivity implements PopularAdaptor.OnAddButtonClickListener {
     private RecyclerView.Adapter adapter, adapter2;
+    private ArrayList<FoodDomain> cartList = new ArrayList<>();
     private RecyclerView recyclerViewCategoryList, recyclerViewPopularList;
     private TextView textViewTenKH;
     private CategoryDAO categoryDAO;
     private MonAnDAO monAnDAO;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +50,14 @@ public class TrangChuActivity extends AppCompatActivity {
         if(tenDN != null){
             textViewTenKH.setText("Xin chào, " +tenDN + "!" );
         }
+
+        LinearLayout CartBTN = findViewById(R.id.cartBtn);
+        CartBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToCart();
+            }
+        });
 
         // Thiết lập danh sách category và popular list
         recyclerViewCategoryList();
@@ -98,8 +112,24 @@ public class TrangChuActivity extends AppCompatActivity {
             foodList.add(new FoodDomain(monAn.getTenMonAn(), monAn.getHinhAnh(), String.valueOf(monAn.getMaMonAn()), Double.parseDouble(monAn.getGiaTien())));
         }
 
-        // Thiết lập adapter cho danh sách món ăn
-        adapter2 = new PopularAdaptor(foodList);
+        // Thiết lập adapter cho danh sách món ăn và truyền listener để xử lý sự kiện nút "Add"
+        adapter2 = new PopularAdaptor(foodList, this);  // Truyền listener vào adapter
         recyclerViewPopularList.setAdapter(adapter2);
+    }
+
+    // Xử lý sự kiện khi nhấn nút "Add"
+    @Override
+    public void onAddButtonClick(int position) {
+        FoodDomain selectedFood = ((PopularAdaptor) adapter2).popularFood.get(position);
+        Toast.makeText(this, selectedFood.getTitle() + " đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+        // Thêm món ăn vào giỏ hàng
+        cartList.add(selectedFood);
+    }
+
+
+    public void navigateToCart() {
+        Intent intent = new Intent(TrangChuActivity.this, CartActivity.class);
+        intent.putExtra("cartList", cartList); // Truyền giỏ hàng sang CartActivity
+        startActivity(intent);
     }
 }

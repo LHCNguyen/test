@@ -88,7 +88,7 @@ public class CreateDatabase extends SQLiteOpenHelper {
 
     public CreateDatabase(Context context) {
 
-        super(context, DATABASE_NAME, null, 9);
+        super(context, DATABASE_NAME, null, 11);
     }
 
     @Override
@@ -194,26 +194,26 @@ public class CreateDatabase extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO PHUONGTHUCTHANHTOAN (NAME) VALUES ('Momo')");
 
         //Thêm dữ liệu vào bảng món ăn
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Gỏi cuốn', 1, '50000', 'goi_cuon.jpg', 1)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bún chay', 1, '40000', 'bun_chay.jpg', 2)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Gà nướng', 2, '120000', 'ga_nuong.jpg', 3)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Sườn nướng', 2, '150000', 'suon_nuong.jpg', 4)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Cá hấp', 3, '130000', 'ca_hap.jpg', 5)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Mực hấp', 3, '140000', 'muc_hap.jpg', 6)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bò xào', 4, '160000', 'bo_xao.jpg', 7)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Gà xào', 4, '110000', 'ga_xao.jpg', 8)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Lẩu thập cẩm', 5, '200000', 'lau_thap_cam.jpg', 9)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Lẩu gà', 5, '180000', 'lau_ga.jpg', 10)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Cá nướng', 6, '150000', 'ca_nuong.jpg', 11)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Tôm nướng', 6, '160000', 'tom_nuong.jpg', 12)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bò hầm', 7, '170000', 'bo_ham.jpg', 13)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Heo hầm', 7, '160000', 'heo_ham.jpg', 14)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bánh xèo', 8, '60000', 'banh_xeo.jpg', 15)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Phở bò', 9, '75000', 'pho_bo.jpg', 16)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Phở gà', 9, '70000', 'pho_ga.jpg', 17)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bánh cuốn', 8, '50000', 'banh_cuon.jpg', 18)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Mì xào hải sản', 4, '85000', 'mi_xao_hai_san.jpg', 19)");
-        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Cơm tấm', 2, '55000', 'com_tam.jpg', 20)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Gỏi cuốn', 1, '50000', ' @drawable/thitbo.png', 1)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bún chay', 1, '40000', '@drawable/thitbo.png', 2)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Gà nướng', 2, '120000', '@drawable/thitbo.png', 3)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Sườn nướng', 2, '150000', '@drawable/thitbo.png', 4)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Cá hấp', 3, '130000', '@drawable/thitbo.png', 5)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Mực hấp', 3, '140000', '@drawable/thitbo.png', 6)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bò xào', 4, '160000', '@drawable/thitbo.png', 7)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Gà xào', 4, '110000', '@drawable/thitbo.png', 8)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Lẩu thập cẩm', 5, '200000', '@drawable/thitbo.png', 9)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Lẩu gà', 5, '180000', '@drawable/thitbo.png', 10)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Cá nướng', 6, '150000', '@drawable/thitbo.png', 11)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Tôm nướng', 6, '160000', '@drawable/thitbo.png', 12)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bò hầm', 7, '170000', '@drawable/thitbo.png', 13)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Heo hầm', 7, '160000', '@drawable/thitbo.png', 14)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bánh xèo', 8, '60000', '@drawable/thitbo.png', 15)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Phở bò', 9, '75000', '@drawable/thitbo.png', 16)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Phở gà', 9, '70000', '@drawable/thitbo.png', 17)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Bánh cuốn', 8, '50000', '@drawable/thitbo.png', 18)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Mì xào hải sản', 4, '85000', '@drawable/thitbo.png', 19)");
+        db.execSQL("INSERT INTO MONAN (TENMONAN, MALOAI, GIATIEN, HINHANH, MANGUYENLIEU) VALUES ('Cơm tấm', 2, '55000', '@drawable/thitbo.png', 20)");
 
         // Thêm dữ liệu mặc định cho bảng LOAIMONAN
         db.execSQL("INSERT INTO LOAIMONAN (TENLOAI, MOTA) VALUES ('Món ăn chay', 'Các món ăn không chứa thịt hoặc sản phẩm từ động vật')");

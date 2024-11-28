@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.orderfoodapp.Model.MonAn;
 
@@ -19,6 +20,11 @@ public class MonAnDAO {
 
     // Phương thức thêm món ăn
     public boolean insertMonAn(String tenMonAn, String giaTien, int maLoai, String hinhAnhPath) {
+
+        if (!hinhAnhPath.startsWith("/") && !hinhAnhPath.startsWith("http")) {
+            hinhAnhPath = "drawable://" + hinhAnhPath;
+        }
+
         SQLiteDatabase db = createDatabase.open();
 
         ContentValues contentValues = new ContentValues();
@@ -48,7 +54,7 @@ public class MonAnDAO {
                 String giaTien = cursor.getString(cursor.getColumnIndexOrThrow("GIATIEN"));
                 int maLoai = cursor.getInt(cursor.getColumnIndexOrThrow("MALOAI"));
                 String hinhAnh = cursor.getString(cursor.getColumnIndexOrThrow("HINHANH"));
-
+                Log.d("MonAnDAO", "Hình ảnh: " + hinhAnh);
                 MonAn monAn = new MonAn(maMonAn, tenMonAn, giaTien, maLoai, hinhAnh);
                 monAnList.add(monAn);
             } while (cursor.moveToNext());
@@ -97,6 +103,11 @@ public class MonAnDAO {
 
     // Phương thức cập nhật món ăn
     public boolean updateMonAn(int maMonAn, String tenMonAn, String giaTien, int maLoai, String hinhAnhPath) {
+
+        if (!hinhAnhPath.startsWith("/") && !hinhAnhPath.startsWith("http")) {
+            hinhAnhPath = "drawable://" + hinhAnhPath;
+        }
+
         SQLiteDatabase db = createDatabase.open();
 
         ContentValues contentValues = new ContentValues();

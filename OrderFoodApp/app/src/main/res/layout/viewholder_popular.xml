@@ -56,12 +56,11 @@
         app:layout_constraintStart_toEndOf="@+id/fee"
         app:layout_constraintTop_toBottomOf="@+id/picpopular" />
 
-    <TextView
+    <Button
         android:id="@+id/addBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="#FF5722"
         android:paddingStart="10dp"
         android:paddingTop="3dp"
         android:paddingEnd="10dp"
@@ -72,6 +71,6 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/picpopular"
         app:layout_constraintStart_toStartOf="@+id/picpopular"
-        app:layout_constraintTop_toBottomOf="@+id/fee" />
+        app:layout_constraintTop_toBottomOf="@+id/fee"  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,10 +42,33 @@ public class CategoryAdaptor extends RecyclerView.Adapter<CategoryAdaptor.ViewHo
         // Thiết lập tên danh mục
         holder.categoryName.setText(category.getName());
 
-        // Hiển thị hình ảnh từ URL hoặc tài nguyên drawable
-        Glide.with(holder.itemView.getContext())
-                .load(category.getImage()) // Giả sử category.getImage() trả về URL hoặc tên tài nguyên
-                .into(holder.categoryPic);
+        // Kiểm tra và tải hình ảnh
+        String imagePath = category.getImage();
+        if (imagePath != null) {
+            if (imagePath.startsWith("http") || imagePath.startsWith("/")) {
+                // Hình ảnh là URL hoặc đường dẫn file
+                Glide.with(holder.itemView.getContext())
+                        .load(imagePath)
+                        .placeholder(R.drawable.picturesignup_transparent) // Ảnh mặc định khi tải
+                        .error(R.drawable.picturesignup_transparent) // Ảnh hiển thị nếu lỗi
+                        .into(holder.categoryPic);
+            } else {
+                // Hình ảnh là tên tài nguyên drawable
+                @SuppressLint("DiscouragedApi") int resourceId = holder.itemView.getContext().getResources()
+                        .getIdentifier(imagePath, "drawable", holder.itemView.getContext().getPackageName());
+
+                // Kiểm tra xem tài nguyên có tồn tại không
+                if (resourceId != 0) {
+                    holder.categoryPic.setImageResource(resourceId);
+                } else {
+                    // Nếu không tìm thấy tài nguyên, sử dụng ảnh mặc định
+                    holder.categoryPic.setImageResource(R.drawable.picturesignup_transparent);
+                }
+            }
+        } else {
+            // Nếu không có hình ảnh, sử dụng ảnh mặc định
+            holder.categoryPic.setImageResource(R.drawable.picturesignup_transparent);
+        }
 
         // Sự kiện khi người dùng click vào category
         holder.itemView.setOnClickListener(v -> {

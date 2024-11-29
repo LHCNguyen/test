@@ -4,11 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.BaseAdapter;
 
 import com.bumptech.glide.Glide;
+import com.example.orderfoodapp.CartActivity;
 import com.example.orderfoodapp.Domain.FoodDomain;
 import com.example.orderfoodapp.R;
 
@@ -39,28 +42,60 @@ public class CartAdaptor extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // Kiểm tra nếu convertView null, nếu có thì tái sử dụng, nếu không sẽ tạo mới
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.viewholder_cart, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.viewholder_cart, null);
         }
 
-        // Lấy món ăn tại vị trí `position`
-        FoodDomain food = cartList.get(position);
+        ImageView imageViewFood = convertView.findViewById(R.id.imageViewFood);
+        TextView textViewFoodTitle = convertView.findViewById(R.id.textViewFoodTitle);
+        TextView textViewFoodPrice = convertView.findViewById(R.id.textViewFoodPrice);
+        final TextView textViewQuantity = convertView.findViewById(R.id.textViewQuantity);
+        Button buttonIncrease = convertView.findViewById(R.id.buttonIncrease);
+        Button buttonDecrease = convertView.findViewById(R.id.buttonDecrease);
+        ImageButton buttonRemove = convertView.findViewById(R.id.buttonRemove);
 
-        // Gán dữ liệu vào các view trong `viewholder_cart.xml`
-        TextView title = convertView.findViewById(R.id.cartTitle);
-        TextView price = convertView.findViewById(R.id.cartPrice);
-        ImageView imageView = convertView.findViewById(R.id.cartImage);
+        final FoodDomain food = cartList.get(position);
 
-        // Cập nhật các thông tin món ăn
-        title.setText(food.getTitle());
-        price.setText(String.valueOf(food.getFee()));
+        // Set thông tin món ăn
+        textViewFoodTitle.setText(food.getTitle());
+        textViewFoodPrice.setText(food.getFee() + " VND");
+        textViewQuantity.setText(String.valueOf(food.getQuantity()));
 
-        // Hiển thị hình ảnh bằng Glide
-        Glide.with(context)
-                .load(food.getPicpopular())
-                .into(imageView);
+        // Xử lý tăng số lượng
+        buttonIncrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                food.setQuantity(food.getQuantity() + 1);
+                textViewQuantity.setText(String.valueOf(food.getQuantity()));
+                // Cập nhật tổng giá giỏ hàng khi số lượng thay đổi
+                ((CartActivity) context).updateTotalPrice();
+            }
+        });
+
+        // Xử lý giảm số lượng
+        buttonDecrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (food.getQuantity() > 1) {
+                    food.setQuantity(food.getQuantity() - 1);
+                    textViewQuantity.setText(String.valueOf(food.getQuantity()));
+                    // Cập nhật tổng giá giỏ hàng khi số lượng thay đổi
+                    ((CartActivity) context).updateTotalPrice();
+                }
+            }
+        });
+
+        // Xử lý xóa món ăn khỏi giỏ hàng
+        buttonRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cartList.remove(position);
+                notifyDataSetChanged();
+                // Cập nhật tổng giá giỏ hàng khi món ăn bị xóa
+                ((CartActivity) context).updateTotalPrice();
+            }
+        });
 
         return convertView;
     }

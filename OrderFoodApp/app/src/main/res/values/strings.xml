@@ -26,4 +26,6 @@
     <string name="btnHistory">Lịch sử đặt hàng</string>
     <string name="btnLogout">Đăng xuất</string>
 
+    <string name="priceCarrt">Tổng </string>
+
 </resources>

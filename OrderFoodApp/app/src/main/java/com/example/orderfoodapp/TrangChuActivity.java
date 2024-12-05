@@ -109,7 +109,24 @@ public class TrangChuActivity extends AppCompatActivity implements PopularAdapto
     @Override
     public void onAddButtonClick(int position) {
         FoodDomain selectedFood = ((PopularAdaptor) adapter2).popularFood.get(position);
+        boolean isFoodExist = false;
+
+        // Kiểm tra xem món ăn đã có trong giỏ hàng chưa
+        for (FoodDomain food : cartList) {
+            if (food.getId().equals(selectedFood.getId())) {
+                // Nếu món ăn đã có, tăng số lượng
+                food.setQuantity(food.getQuantity() + 1);
+                isFoodExist = true;
+                break;
+            }
+        }
+
+        if (!isFoodExist) {
+            // Nếu món ăn chưa có trong giỏ hàng, thêm món ăn vào giỏ hàng
+            selectedFood.setQuantity(1); // Mặc định số lượng là 1 khi thêm món mới
+            cartList.add(selectedFood);
+        }
+
         Toast.makeText(this, selectedFood.getTitle() + " đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-        cartList.add(selectedFood);
     }
 }

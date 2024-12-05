@@ -43,5 +43,6 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation ("com.github.bumptech.glide:glide:4.12.0") // Phiên bản mới nhất có thể thay đổi
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("androidx.sqlite:sqlite:2.1.0")
 
 }

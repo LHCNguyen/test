@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class CartActivity extends AppCompatActivity {
     private ListView listViewCart;
     private CartAdapter cartAdapter;
+    private Button butonOnPlacerOrder;
     private ArrayList<FoodDomain> cartList;
     private TextView textViewTotalPrice;
 
@@ -31,6 +32,18 @@ public class CartActivity extends AppCompatActivity {
 
         listViewCart = findViewById(R.id.listViewCart);
         textViewTotalPrice = findViewById(R.id.textViewCartTitle);
+        butonOnPlacerOrder = findViewById(R.id.buttonPlaceOrder);
+
+        butonOnPlacerOrder.setOnClickListener(v -> {
+            double totalPrice = 0;
+            for (FoodDomain food : cartList) {
+                totalPrice += food.getFee() * food.getQuantity();
+            }
+            // Truyền tổng giá sang màn hình thanh toán
+            Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
+            intent.putExtra("totalPrice", totalPrice); // Truyền tổng tiền
+            startActivity(intent);
+        });
 
         // Lấy giỏ hàng từ Intent
         Intent intent = getIntent();
@@ -42,6 +55,7 @@ public class CartActivity extends AppCompatActivity {
 
         // Cập nhật tổng giá trị giỏ hàng
         updateTotalPrice();
+
     }
 
     public void updateTotalPrice() {

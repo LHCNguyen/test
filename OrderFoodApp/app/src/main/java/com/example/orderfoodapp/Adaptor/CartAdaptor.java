@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.BaseAdapter;
 
-import com.bumptech.glide.Glide;
 import com.example.orderfoodapp.CartActivity;
 import com.example.orderfoodapp.Domain.FoodDomain;
 import com.example.orderfoodapp.R;
@@ -21,7 +20,7 @@ public class CartAdaptor extends BaseAdapter {
     private Context context;
     private ArrayList<FoodDomain> cartList;
 
-    public CartAdaptor(Context context, ArrayList<FoodDomain> cartList) {
+    public CartAdaptor(ArrayList<FoodDomain> cartList) {
         this.context = context;
         this.cartList = cartList;
     }

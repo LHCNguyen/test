@@ -77,8 +77,7 @@ public class DangNhapActivity extends AppCompatActivity {
                                 startActivity(new Intent(DangNhapActivity.this, AdminActivity.class));
                                 break;
                             case 2:
-                                // Vai trò Nhân viên
-
+                                startActivity(new Intent(DangNhapActivity.this, EmployeeActivity.class));
                                 break;
                             case 3:
                                 // Vai trò Khách hàng

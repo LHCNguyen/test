@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <!-- Hiển thị tên món ăn -->
+    <TextView
+        android:id="@+id/tvTenMonAn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Tên món ăn"
+        android:textSize="16sp" />
+
+    <!-- Hiển thị giá tiền -->
+    <TextView
+        android:id="@+id/tvGiaTien"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50000"
+        android:textSize="16sp" />
+
+    <!-- Nút sửa món ăn -->
+    <Button
+        android:id="@+id/btnEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sửa" />
+
+    <!-- Nút xóa món ăn -->
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Xóa" />
+
+</LinearLayout>

@@ -6,63 +6,56 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.orderfoodapp.Domain.BanDomain;
 import com.example.orderfoodapp.R;
-
 import java.util.ArrayList;
 
 public class BanAdaptor extends RecyclerView.Adapter<BanAdaptor.BanViewHolder> {
     private Context context;
-    private ArrayList<BanDomain> danhSachBan;
+    private ArrayList<BanDomain> listBan;
     private OnItemClickListener listener;
-
-    public BanAdaptor(Context context, ArrayList<BanDomain> danhSachBan, OnItemClickListener listener) {
-        this.context = context;
-        this.danhSachBan = danhSachBan;
-        this.listener = listener;
-    }
-
-    @NonNull
-    @Override
-    public BanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_ban, parent, false);
-        return new BanViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull BanViewHolder holder, int position) {
-        BanDomain ban = danhSachBan.get(position);
-        holder.tenBan.setText(ban.getTenBan());
-        holder.tinhTrang.setText(ban.getTinhTrang());
-        holder.trangThai.setChecked(ban.getTinhTrang().equals("Đang sử dụng"));
-
-        holder.trangThai.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (listener != null) {
-                listener.onStatusChange(ban, isChecked);
-            }
-        });
-    }
-
-    @Override
-    public int getItemCount() {
-        return danhSachBan.size();
-    }
 
     public interface OnItemClickListener {
         void onStatusChange(BanDomain ban, boolean isChecked);
     }
 
-    static class BanViewHolder extends RecyclerView.ViewHolder {
-        TextView tenBan, tinhTrang;
-        CheckBox trangThai;
+    public BanAdaptor(Context context, ArrayList<BanDomain> listBan, OnItemClickListener listener) {
+        this.context = context;
+        this.listBan = listBan;
+        this.listener = listener;
+    }
 
-        public BanViewHolder(@NonNull View itemView) {
+    @Override
+    public BanViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.viewholder_ban, parent, false);
+        return new BanViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(BanViewHolder holder, int position) {
+        final BanDomain ban = listBan.get(position);
+        holder.textViewTenBan.setText(ban.getName());
+        holder.checkBoxTinhTrang.setChecked(ban.getTinhTrang().equals("Đang sử dụng"));
+        holder.checkBoxTinhTrang.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Hoãn thay đổi trạng thái cho đến khi RecyclerView đã hoàn tất việc tính toán layout
+            holder.itemView.post(() -> listener.onStatusChange(ban, isChecked));
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return listBan.size();
+    }
+
+    public class BanViewHolder extends RecyclerView.ViewHolder {
+        TextView textViewTenBan;
+        CheckBox checkBoxTinhTrang;
+
+        public BanViewHolder(View itemView) {
             super(itemView);
-            tenBan = itemView.findViewById(R.id.tenBan);
-            tinhTrang = itemView.findViewById(R.id.tinhTrangBan);
-            trangThai = itemView.findViewById(R.id.checkBoxTrangThai);
+            textViewTenBan = itemView.findViewById(R.id.textViewBanName);
+            checkBoxTinhTrang = itemView.findViewById(R.id.checkBoxOccupied);
         }
     }
 }

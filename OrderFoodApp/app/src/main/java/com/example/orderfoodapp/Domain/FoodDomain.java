@@ -2,21 +2,22 @@ package com.example.orderfoodapp.Domain;
 
 import java.io.Serializable;
 
+
 public class FoodDomain implements Serializable {
 
-    private String title;
-    private String picpopular;  // Thay đổi từ 'image' thành 'picpopular'
-    private String id;
-    private double fee;  // Đổi 'price' thành 'fee'
-    private int quantity;
+    private String title;         // Tên món ăn
+    private String picpopular;    // Hình ảnh của món ăn
+    private String id;            // Mã món ăn (ID)
+    private double fee;           // Giá món ăn
+    private int quantity;         // Số lượng món ăn trong giỏ hàng
 
     // Constructor
-    public FoodDomain(String title, String picpopular, String id, double fee) {
+    public FoodDomain(String title, String picpopular, String id, double fee, int quantity) {
         this.title = title;
         this.picpopular = picpopular;
         this.id = id;
         this.fee = fee;
-        this.quantity = 1;  // Mặc định số lượng là 1
+        this.quantity = quantity;
     }
 
     // Getter và Setter cho các thuộc tính
@@ -59,4 +60,5 @@ public class FoodDomain implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
 }

@@ -41,8 +41,13 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation ("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
     implementation ("com.github.bumptech.glide:glide:4.12.0") // Phiên bản mới nhất có thể thay đổi
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
     implementation ("androidx.sqlite:sqlite:2.1.0")
+    dependencies {
+        implementation ("androidx.recyclerview:recyclerview:1.2.1")
+    }
+
 
 }

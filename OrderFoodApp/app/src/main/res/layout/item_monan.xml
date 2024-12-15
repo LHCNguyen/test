@@ -1,0 +1,42 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:layout_marginBottom="4dp">
+
+    <!-- Hình ảnh món ăn -->
+    <ImageView
+        android:id="@+id/imgMonAn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/nguoinauan"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Tên món ăn -->
+    <TextView
+        android:id="@+id/tvTenMonAn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tên món ăn"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/imgMonAn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Số lượng món ăn -->
+    <TextView
+        android:id="@+id/tvSoLuongMonAn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Số lượng: 1"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/imgMonAn"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

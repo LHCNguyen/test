@@ -15,13 +15,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.orderfoodapp.Domain.FoodDomain;
+import com.example.orderfoodapp.Domain.FoodOrderItem;
 
 import java.util.ArrayList;
 
 public class CartActivity extends AppCompatActivity {
     private ListView listViewCart;
     private CartAdapter cartAdapter;
-    private Button butonOnPlacerOrder;
+    private Button buttonPlaceOrder;
     private ArrayList<FoodDomain> cartList;
     private TextView textViewTotalPrice;
 
@@ -32,18 +33,7 @@ public class CartActivity extends AppCompatActivity {
 
         listViewCart = findViewById(R.id.listViewCart);
         textViewTotalPrice = findViewById(R.id.textViewCartTitle);
-        butonOnPlacerOrder = findViewById(R.id.buttonPlaceOrder);
-
-        butonOnPlacerOrder.setOnClickListener(v -> {
-            double totalPrice = 0;
-            for (FoodDomain food : cartList) {
-                totalPrice += food.getFee() * food.getQuantity();
-            }
-            // Truyền tổng giá sang màn hình thanh toán
-            Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
-            intent.putExtra("totalPrice", totalPrice); // Truyền tổng tiền
-            startActivity(intent);
-        });
+        buttonPlaceOrder = findViewById(R.id.buttonPlaceOrder);
 
         // Lấy giỏ hàng từ Intent
         Intent intent = getIntent();
@@ -56,8 +46,31 @@ public class CartActivity extends AppCompatActivity {
         // Cập nhật tổng giá trị giỏ hàng
         updateTotalPrice();
 
+        // Xử lý sự kiện nhấn nút "Đặt hàng"
+        buttonPlaceOrder.setOnClickListener(v -> {
+            double totalPrice = 0;
+            ArrayList<FoodOrderItem> foodOrderItemList = new ArrayList<>();
+
+            // Chuyển đổi từ FoodDomain sang FoodOrderItem
+            for (FoodDomain food : cartList) {
+                // Tạo FoodOrderItem từ FoodDomain và thêm vào danh sách
+                FoodOrderItem foodOrderItem = new FoodOrderItem(food.getTitle(), food.getFee(), food.getQuantity());
+                foodOrderItemList.add(foodOrderItem);
+
+                // Tính tổng giá tiền
+                totalPrice += food.getFee() * food.getQuantity();
+            }
+
+            // Truyền danh sách FoodOrderItem và tổng tiền sang PaymentActivity
+            Intent paymentIntent = new Intent(CartActivity.this, PaymentActivity.class);
+            paymentIntent.putExtra("cartList", foodOrderItemList); // Truyền danh sách FoodOrderItem
+            paymentIntent.putExtra("totalPrice", totalPrice); // Truyền tổng tiền
+            startActivity(paymentIntent);
+        });
+
     }
 
+    // Cập nhật tổng giá trị giỏ hàng
     public void updateTotalPrice() {
         double totalPrice = 0;
         for (FoodDomain food : cartList) {
@@ -113,35 +126,26 @@ public class CartActivity extends AppCompatActivity {
             textViewQuantity.setText(String.valueOf(food.getQuantity()));
 
             // Xử lý tăng số lượng
-            buttonIncrease.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    food.setQuantity(food.getQuantity() + 1);
+            buttonIncrease.setOnClickListener(v -> {
+                food.setQuantity(food.getQuantity() + 1);
+                textViewQuantity.setText(String.valueOf(food.getQuantity()));
+                updateTotalPrice();
+            });
+
+            // Xử lý giảm số lượng
+            buttonDecrease.setOnClickListener(v -> {
+                if (food.getQuantity() > 1) {
+                    food.setQuantity(food.getQuantity() - 1);
                     textViewQuantity.setText(String.valueOf(food.getQuantity()));
                     updateTotalPrice();
                 }
             });
 
-            // Xử lý giảm số lượng
-            buttonDecrease.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (food.getQuantity() > 1) {
-                        food.setQuantity(food.getQuantity() - 1);
-                        textViewQuantity.setText(String.valueOf(food.getQuantity()));
-                        updateTotalPrice();
-                    }
-                }
-            });
-
-            // Xử lý xóa món ăn
-            buttonRemove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cartList.remove(position);
-                    notifyDataSetChanged();
-                    updateTotalPrice();
-                }
+            // Xử lý xóa món ăn khỏi giỏ hàng
+            buttonRemove.setOnClickListener(v -> {
+                cartList.remove(position);
+                notifyDataSetChanged(); // Cập nhật lại ListView
+                updateTotalPrice(); // Cập nhật tổng giá trị giỏ hàng
             });
 
             return convertView;

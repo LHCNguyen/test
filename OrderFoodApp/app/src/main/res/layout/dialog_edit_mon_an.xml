@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Nhập tên món ăn -->
+    <EditText
+        android:id="@+id/edtTenMonAn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên món ăn"
+        android:inputType="text" />
+
+    <!-- Nhập giá tiền -->
+    <EditText
+        android:id="@+id/edtGiaTien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Giá tiền"
+        android:inputType="numberDecimal" />
+
+    <!-- Chọn loại món ăn -->
+    <Spinner
+        android:id="@+id/spnLoai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Nút lưu thay đổi -->
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lưu thay đổi" />
+
+</LinearLayout>

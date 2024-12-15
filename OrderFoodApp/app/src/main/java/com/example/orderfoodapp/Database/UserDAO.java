@@ -18,8 +18,6 @@ public class UserDAO {
         this.database = new CreateDatabase(context);
     }
 
-
-
     // Insert User vào database
     public long insertUSER(User user) {
         SQLiteDatabase db = database.open();

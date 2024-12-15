@@ -2,12 +2,12 @@ package com.example.orderfoodapp.Domain;
 
 public class BanDomain {
     private int id;
-    private String tenBan;
-    private String tinhTrang;
+    private String name;
+    private String tinhTrang;  // "Đang sử dụng" hoặc "Trống"
 
-    public BanDomain(int id, String tenBan, String tinhTrang) {
+    public BanDomain(int id, String name, String tinhTrang) {
         this.id = id;
-        this.tenBan = tenBan;
+        this.name = name;
         this.tinhTrang = tinhTrang;
     }
 
@@ -15,16 +15,8 @@ public class BanDomain {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTenBan() {
-        return tenBan;
-    }
-
-    public void setTenBan(String tenBan) {
-        this.tenBan = tenBan;
+    public String getName() {
+        return name;
     }
 
     public String getTinhTrang() {

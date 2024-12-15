@@ -99,7 +99,7 @@ public class TrangChuActivity extends AppCompatActivity implements PopularAdapto
 
         ArrayList<FoodDomain> foodList = new ArrayList<>();
         for (MonAn monAn : monAnList) {
-            foodList.add(new FoodDomain(monAn.getTenMonAn(), monAn.getHinhAnh(), String.valueOf(monAn.getMaMonAn()), Double.parseDouble(monAn.getGiaTien())));
+            foodList.add(new FoodDomain(monAn.getTenMonAn(), monAn.getHinhAnh(), String.valueOf(monAn.getMaMonAn()), Double.parseDouble(monAn.getGiaTien()),1));
         }
 
         adapter2 = new PopularAdaptor(foodList, this);

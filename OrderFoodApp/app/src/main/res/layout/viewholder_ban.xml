@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <!-- Tên bàn -->
+    <TextView
+        android:id="@+id/textViewBanName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bàn 1"
+        android:textSize="16sp"
+        android:layout_marginEnd="10dp"
+        android:gravity="start" />
+
+    <!-- Checkbox đánh dấu bàn có khách -->
+    <CheckBox
+        android:id="@+id/checkBoxOccupied"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Có khách"
+        android:gravity="end" />
+</LinearLayout>

@@ -59,8 +59,9 @@ public class CreateDatabase extends SQLiteOpenHelper {
     public static String TB_GOIMON_NGAYTHANHTOAN = "NGAYTHANHTOAN";
     public static String TB_GOIMON_TONGSOMON = "TONGSOMON";
     public static String TB_GOIMON_TONGTIEN = "TONGTIEN";
-    public static String TB_GOIMON_THUAVAT = "THUEVAT";
+    public static String TB_GOIMON_THUEVAT = "THUEVAT";
     public static String TB_GOIMON_MAPHUONGTHUCTHANHTOAN = "MAPHUONGTHUCTHANHTOAN";
+    public static String TB_GOIMON_MAMONAN = "MAMONAN";
 
     public static String TB_CHITIETGOIMON_MACTGM = "MACTGM";
     public static String TB_CHITIETGOIMON_MAGOIMON = "MAGOIMON";
@@ -88,7 +89,7 @@ public class CreateDatabase extends SQLiteOpenHelper {
 
     public CreateDatabase(Context context) {
 
-        super(context, DATABASE_NAME, null, 11);
+        super(context, DATABASE_NAME, null, 14);
     }
 
     @Override
@@ -133,11 +134,13 @@ public class CreateDatabase extends SQLiteOpenHelper {
                 + TB_GOIMON_NGAYTHANHTOAN + " TEXT,"
                 + TB_GOIMON_TONGSOMON + " TEXT ,"
                 + TB_GOIMON_TONGTIEN + " TEXT, "
-                + TB_GOIMON_THUAVAT + " TEXT, "
+                + TB_GOIMON_THUEVAT + " TEXT, "
                 + TB_GOIMON_MAPHUONGTHUCTHANHTOAN + " INTEGER, "
+                + TB_GOIMON_MAMONAN + " INTEGER, "
                 + "FOREIGN KEY(" + TB_GOIMON_MABAN + ") REFERENCES " + TB_BANAN + "(" + TB_BANAN_MABAN + "), "
                 + "FOREIGN KEY(" + TB_GOIMON_MAPHUONGTHUCTHANHTOAN + ") REFERENCES " + TB_PHUONGTHUCTHANHTOAN + "(" + TB_PHUONGTHUCTHANHTOAN_MAPTTH + "), "
-                + "FOREIGN KEY(" + TB_GOIMON_MAUSER + ") REFERENCES " + TB_USER + "(" + TB_USER_MAUSER + "))";
+                + "FOREIGN KEY(" + TB_GOIMON_MAUSER + ") REFERENCES " + TB_USER + "(" + TB_USER_MAUSER + "), "
+                + "FOREIGN KEY(" + TB_GOIMON_MAMONAN + ") REFERENCES " + TB_MONAN + "(" + TB_MONAN_MAMONAN + "))";
 
         String tbCHITETGOIMON = "CREATE TABLE " + TB_CHITIETGOIMON + " ( "
                 + TB_CHITIETGOIMON_MACTGM + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -265,6 +268,16 @@ public class CreateDatabase extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Lá chanh', '5 kg', 'Lá chanh tươi, thơm')");
         db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Nước mắm', '100 lít', 'Nước mắm nguyên chất')");
         db.execSQL("INSERT INTO NGUYENLIEU (TENNGUYENLIEU, KHOILUONG, MOTA) VALUES ('Đường', '150 kg', 'Đường trắng, tinh khiết')");
+
+
+        // Thêm dữ liệu vào bảng GOIMON
+        db.execSQL("INSERT INTO GOIMON (MABAN, MAUSER, NGAYGOI, NGAYTHANHTOAN, TONGSOMON, TONGTIEN, THUEVAT, MAPHUONGTHUCTHANHTOAN, MAMONAN) VALUES (1, 1, '2024-12-01', '2024-12-01', '1', '500000', '10', 1, 1)");
+        db.execSQL("INSERT INTO GOIMON (MABAN, MAUSER, NGAYGOI, NGAYTHANHTOAN, TONGSOMON, TONGTIEN, THUEVAT, MAPHUONGTHUCTHANHTOAN, MAMONAN) VALUES (2, 2, '2024-12-01', '2024-12-01', '1', '300000', '10', 2, 2)");
+
+        // Thêm dữ liệu vào bảng CHITIETGOIMON
+        db.execSQL("INSERT INTO CHITIETGOIMON (MAGOIMON, MAMONAN, SOLUONG, TRANGTHAI) VALUES (1, 1, 2, 'Đã chuẩn bị')");
+        db.execSQL("INSERT INTO CHITIETGOIMON (MAGOIMON, MAMONAN, SOLUONG, TRANGTHAI) VALUES (1, 2, 1, 'Đang chuẩn bị')");
+
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){

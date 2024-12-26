@@ -26,5 +26,17 @@
     <string name="btnLogout">Đăng xuất</string>
 
     <string name="priceCarrt">Tổng </string>
+    <string name="title_activity_nhan_vien">NhanVienActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Nhân Viên</string>
+    <string name="nav_header_subtitle">staff@example.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="quanliban">Quản lí bàn</string>
+    <string name="quanlidonhang">Quản lí đơn hàng</string>
+
+    <string name="menu_quanlibanan">Quản lí bàn ăn</string>
+    <string name="menu_quanlidonhang">Quản lí đơn hàng</string>
+    <string name="menu_slideshow">Slideshow</string>
 
 </resources>

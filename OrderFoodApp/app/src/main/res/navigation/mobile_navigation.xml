@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_quanliban"
+        android:name="com.example.orderfoodapp.ui.nhanvien.QuanLiBan"
+        android:label="@string/quanliban"
+        tools:layout="@layout/fragment_quanliban" />
+
+    <fragment
+        android:id="@+id/nav_quanlidonhang"
+        android:name="com.example.orderfoodapp.ui.nhanvien.QuanLiDonHang"
+        android:label="@string/quanlidonhang"
+        tools:layout="@layout/fragment_quanlidondathang" />
+</navigation>
